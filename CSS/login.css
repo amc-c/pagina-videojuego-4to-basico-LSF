@@ -1,0 +1,190 @@
+/* CSS/login.css */
+
+/* ─── Escena login ──────────────────────────────────── */
+#scene-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#login-bg {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: url('../img/fondo_login.png') center / cover no-repeat;
+    image-rendering: pixelated;
+    filter: brightness(0.75);
+}
+
+/* ─── Panel del formulario ──────────────────────────── */
+.login-panel {
+    position: relative;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.92);
+    border: 6px solid #4a4a4a;
+    border-radius: 8px;
+    padding: 28px 32px;
+    width: 82%;
+    max-width: 510px;
+    /* FIX #7: box-sizing para que padding no desborde */
+    box-sizing: border-box;
+    box-shadow: inset 0 0 0 4px #b5b5b5, 5px 5px 0 rgba(0,0,0,0.5);
+    text-align: center;
+}
+
+.login-title {
+    color: #e3350d;
+    text-shadow: 2px 2px 0 #000;
+    margin: 0 0 12px;
+    font-size: clamp(18px, 3.5vw, 28px);
+}
+
+.login-help {
+    font-size: clamp(9px, 1.2vw, 12px);
+    color: #333;
+    line-height: 1.8;
+    margin: 6px 0;
+}
+
+/* ─── Campo de nombre ───────────────────────────────── */
+.input-group {
+    /* FIX #7: box-sizing en el contenedor */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.input-group input {
+    font-family: 'Press Start 2P', monospace;
+    /* FIX #7: width:100% + box-sizing para no desbordar */
+    width: 85%;
+    max-width: 340px;
+    box-sizing: border-box;
+    padding: 10px 8px;
+    font-size: clamp(10px, 1.5vw, 14px);
+    border: 4px solid #4a4a4a;
+    background: #fff;
+    color: #000;
+    outline: none;
+    text-align: center;
+    box-shadow: inset 3px 3px 0 #ccc;
+}
+
+.input-group input:focus {
+    border-color: #e3350d;
+    box-shadow: inset 3px 3px 0 #ccc, 0 0 0 2px rgba(227,53,13,0.35);
+}
+
+/* ─── Selección de avatares ─────────────────────────── */
+.avatar-selection {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 14px 0;
+    flex-wrap: wrap;
+}
+
+/* FIX #1: hover/focus unificados en animations.css; aquí solo base */
+.avatar-option {
+    background: transparent;
+    border: 4px solid #ccc;
+    padding: 5px;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+}
+
+.avatar-option img {
+    width:  60px;
+    height: 60px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    display: block;
+}
+
+/* FIX #2: se elimina `animation: sparkExpand` que no existía */
+.avatar-option.selected {
+    border-color: #e3350d;
+    background: rgba(227, 53, 13, 0.18);
+    /* avatarFireBorder viene de animations.css */
+}
+
+/* ─── Botón INGRESAR ────────────────────────────────── */
+#btn-login {
+    font-family: 'Press Start 2P', monospace;
+    background: #e3350d;
+    color: white;
+    border: 4px solid #fff;
+    padding: 14px 22px;
+    font-size: clamp(12px, 1.8vw, 16px);
+    cursor: pointer;
+    box-shadow: 4px 4px 0 #000;
+    margin-top: 18px;
+    text-shadow: 2px 2px 0 #000;
+    /* transition viene de animations.css */
+}
+
+#btn-login:active {
+    box-shadow: 2px 2px 0 #000;
+}
+
+/* ─── Mensaje de error ──────────────────────────────── */
+.error-message {
+    color: #e3350d;
+    font-size: clamp(8px, 1.1vw, 10px);
+    margin-top: 10px;
+    background: #ffdbd3;
+    border: 2px solid #e3350d;
+    padding: 8px 10px;
+    box-sizing: border-box;
+    line-height: 1.6;
+}
+
+/* ─── Menú provisional ──────────────────────────────── */
+.menu-placeholder {
+    color: white;
+    text-align: center;
+    width: 100%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    box-sizing: border-box;
+}
+.menu-placeholder h2 {
+    color: #ffeb3b;
+    text-shadow: 3px 3px 0 #000;
+    font-size: clamp(16px, 2.5vw, 24px);
+    margin-bottom: 20px;
+}
+.menu-placeholder h3 {
+    color: #fff;
+    font-size: clamp(12px, 2vw, 18px);
+    text-shadow: 2px 2px 0 #000;
+    margin: 8px 0;
+}
+.menu-box {
+    background: rgba(0,0,0,0.55);
+    border: 4px solid #fff;
+    padding: 20px 30px;
+    display: inline-block;
+    margin: 20px 0;
+    box-sizing: border-box;
+}
+.selected-avatar-display img {
+    width:  80px;
+    height: 80px;
+    border: 4px solid #fff;
+    background: #888;
+    margin-top: 12px;
+    image-rendering: pixelated;
+    object-fit: contain;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.status-text {
+    font-size: clamp(9px, 1.2vw, 12px);
+    color: #bbb;
+    margin-top: 30px;
+}

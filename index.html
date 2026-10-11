@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Tablas</title>
+    <link rel="icon" type="image/png" href="img/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/animations.css">
+    <link rel="stylesheet" href="CSS/intro.css">
+    <link rel="stylesheet" href="CSS/login.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        #game-container {
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scene {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Only allow interaction if active */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease;
+        }
+
+        .scene.active {
+            pointer-events: auto;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Generic classes */
+        .hidden { display: none !important; }
+        .mt-2 { margin-top: 1rem; }
+
+        /* Contenedores de efectos DOM — siempre por encima de todo */
+        #sparks-container,
+        #leaves-container,
+        #confetti-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 9000;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <!-- Efectos DOM: FUERA del game-container para máximo z-index -->
+    <div id="sparks-container"></div>
+    <div id="leaves-container"></div>
+    <div id="confetti-container"></div>
+
+    <div id="game-container">
+        <!-- Scene 1: Loading (Black) -->
+        <div id="scene-loading" class="scene active" style="background-color: black; z-index: 100;"></div>
+
+        <!-- Scene 2: Título -->
+        <div id="scene-title" class="scene" style="z-index: 20;">
+            <!-- Imagen de portada como fondo principal -->
+            <img id="title-bg-img" src="img/edicion_rojo_fuego.png" alt="Portada Pokémon Rojo Fuego">
+
+            <!-- Botón START centrado a la izquierda (zona típica de la portada) -->
+            <div class="start-wrapper">
+                <button id="btn-start" tabindex="0">▶ START</button>
+            </div>
+        </div>
+
+        <!-- Scene 3: Login -->
+        <div id="scene-login" class="scene" style="z-index: 30;">
+            <div id="login-bg"></div>
+            <div class="login-panel">
+                <h1 class="login-title">MIS TABLAS</h1>
+                <p class="login-help">¿Cómo te llamas, entrenador?</p>
+                
+                <div class="input-group">
+                    <input type="text" id="student-name" maxlength="24" placeholder="Tu nombre..." autocomplete="off">
+                </div>
+
+                <p class="login-help mt-2">Elige tu avatar:</p>
+                <div class="avatar-selection" id="avatar-container" role="radiogroup" aria-label="Selección de avatar">
+                    <button class="avatar-option" data-id="1" role="radio" aria-checked="false" tabindex="0">
+                        <img src="img/avatar_01.png" alt="Avatar 1">
+                    </button>
+                    <button class="avatar-option" data-id="2" role="radio" aria-checked="false" tabindex="0">
+                        <img src="img/avatar_02.jpg" alt="Avatar 2">
+                    </button>
+                    <button class="avatar-option" data-id="3" role="radio" aria-checked="false" tabindex="0">
+                        <img src="img/avatar_03.jpg" alt="Avatar 3">
+                    </button>
+                    <button class="avatar-option" data-id="4" role="radio" aria-checked="false" tabindex="0">
+                        <img src="img/avatar_04.jpg" alt="Avatar 4">
+                    </button>
+                </div>
+
+                <div id="login-error" class="error-message hidden"></div>
+                
+                <button id="btn-login">INGRESAR</button>
+            </div>
+        </div>
+
+        <!-- Scene 4: Provisional Menú -->
+        <div id="scene-menu" class="scene" style="z-index: 40; background-color: #2b453a;">
+            <div class="menu-placeholder">
+                <h2>MENÚ PRINCIPAL</h2>
+                <div class="menu-box">
+                    <p>Bienvenido,</p>
+                    <h3 id="display-name"></h3>
+                    <div class="selected-avatar-display">
+                        <img id="display-avatar" src="" alt="Avatar Seleccionado">
+                    </div>
+                </div>
+                <p class="status-text">[Módulos de juego en construcción]</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="JS/audioManager.js"></script>
+    <script src="JS/particleSystem.js"></script>
+    <script src="JS/login.js"></script>
+    <script src="JS/sceneManager.js"></script>
+    <script src="JS/app.js"></script>
+</body>
+</html>

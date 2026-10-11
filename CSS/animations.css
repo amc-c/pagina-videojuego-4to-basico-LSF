@@ -1,0 +1,213 @@
+/* CSS/animations.css */
+
+/* ═══════════════════════════════════════════════════════════
+   CINEMÁTICAS
+═══════════════════════════════════════════════════════════ */
+@keyframes blinkStart {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+.cinematic-appear {
+    animation: cinematicAppearAnim 2s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+@keyframes cinematicAppearAnim {
+    0%   { filter: blur(20px) brightness(0); transform: scale(1.1); }
+    50%  { filter: blur(5px)  brightness(0.8); }
+    100% { filter: blur(0px)  brightness(1);   transform: scale(1); }
+}
+
+.cinematic-transition-out {
+    animation: cinematicOutAnim 1.5s ease-in forwards;
+}
+@keyframes cinematicOutAnim {
+    0%   { filter: blur(0px);                transform: scale(1); }
+    40%  { filter: blur(2px);                transform: scale(1.15); }
+    100% { filter: blur(18px) brightness(0); transform: scale(1.5); }
+}
+
+.cinematic-transition-in {
+    animation: cinematicInAnim 1s ease-out forwards;
+}
+@keyframes cinematicInAnim {
+    0%   { filter: blur(15px) brightness(0); transform: scale(1.08); }
+    100% { filter: blur(0px)  brightness(1); transform: scale(1); }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   LLUVIA DE CHISPAS EN PORTADA  (img/chispas.jfif)
+═══════════════════════════════════════════════════════════ */
+.title-spark {
+    position: fixed;          /* fixed para salir desde arriba de toda la pantalla */
+    object-fit: contain;
+    pointer-events: none;
+    z-index: 9000;
+    animation: sparkRain linear forwards;
+    opacity: 1;
+    filter: drop-shadow(0 0 5px #ff8c00) drop-shadow(0 0 10px #ffcc00);
+}
+
+@keyframes sparkRain {
+    0%   { transform: translateY(0)     rotate(0deg)   scale(1);    opacity: 1; }
+    70%  {                                                           opacity: 0.8; }
+    100% { transform: translateY(105vh) rotate(360deg) scale(0.5); opacity: 0; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   HOJAS DE VIENTO — de derecha a izquierda
+═══════════════════════════════════════════════════════════ */
+/* La clase sólo define propiedades que NO son dinámicas.
+   Las dinámicas (position, top, right, size, color, animation)
+   las inyecta el JS directamente para evitar conflictos. */
+.wind-leaf {
+    pointer-events: none;
+}
+
+@keyframes leafFly {
+    0% {
+        transform: translateX(0)     translateY(0)    rotate(0deg);
+        opacity: 1;
+    }
+    15% {
+        transform: translateX(-20vw) translateY(-20px) rotate(calc(var(--rotate) * 0.2));
+        opacity: 1;
+    }
+    55% {
+        transform: translateX(-75vw) translateY(30px)  rotate(calc(var(--rotate) * 0.65));
+        opacity: 0.9;
+    }
+    100% {
+        transform: translateX(-125vw) translateY(10px) rotate(var(--rotate));
+        opacity: 0;
+    }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   CONFETI DE LLAMAS (menú)
+═══════════════════════════════════════════════════════════ */
+.confetti-flame {
+    pointer-events: none;
+    border-radius: 50% 50% 30% 30%;
+    clip-path: polygon(50% 0%, 80% 35%, 100% 65%, 70% 100%, 30% 100%, 0% 65%, 20% 35%);
+    animation: flameFall linear forwards;
+    filter: drop-shadow(0 0 6px #ff6d00) drop-shadow(0 0 14px #ffcc00);
+}
+
+@keyframes flameFall {
+    0%   { transform: translateY(0)     rotate(0deg)   scale(1);   opacity: 1; }
+    80%  {                                                          opacity: 0.85; }
+    100% { transform: translateY(108vh) rotate(540deg) scale(0.3); opacity: 0; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   HOVER — botones se agrandan con glow de fuego
+   FIX #1/#4: reglas unificadas aquí, eliminadas de login.css
+═══════════════════════════════════════════════════════════ */
+#btn-start {
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
+                filter    0.15s ease;
+    /* La animación blinkStart la define intro.css */
+}
+/* FIX #4: hover no pausa ninguna animación; sólo cambia escala y filtro */
+#btn-start:hover {
+    transform: scale(1.22) !important;
+    filter: brightness(1.5) drop-shadow(0 0 10px #ff6a00) drop-shadow(0 0 22px #ffcc00);
+}
+#btn-start:active {
+    transform: scale(0.90) !important;
+    filter: brightness(0.85);
+}
+
+#btn-login {
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
+                filter    0.15s ease;
+}
+#btn-login:hover,
+#btn-login:focus {
+    transform: scale(1.12);
+    filter: brightness(1.35) drop-shadow(0 0 8px #ff3d00) drop-shadow(0 0 16px #ffcc00);
+}
+#btn-login:active { transform: scale(0.91); }
+
+/* FIX #1: avatar-option hover consolidado aquí, sin duplicado en login.css */
+.avatar-option {
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
+                filter    0.15s ease;
+}
+.avatar-option:hover,
+.avatar-option:focus {
+    transform: scale(1.18) !important;
+    filter: brightness(1.25) drop-shadow(0 0 7px #ff6a00);
+    z-index: 5;
+}
+.avatar-option:active { transform: scale(0.88) !important; }
+
+
+/* ═══════════════════════════════════════════════════════════
+   EXPLOSIÓN DE LLAMAS CSS al hacer click
+═══════════════════════════════════════════════════════════ */
+.fire-spark-burst {
+    position: fixed;
+    width:  12px;
+    height: 20px;
+    border-radius: 50% 50% 30% 30%;
+    background: radial-gradient(circle at 50% 20%,
+        #fff 0%, #ffeb3b 25%, #ff9800 55%, #e53935 80%, transparent 100%);
+    pointer-events: none;
+    z-index: 9999;
+    transform-origin: center bottom;
+    margin-left: -6px;
+    margin-top:  -10px;
+    animation: sparkFly 0.85s ease-out forwards;
+}
+
+@keyframes sparkFly {
+    0%   { opacity: 1;   transform: rotate(var(--angle)) translateY(0px)                          scale(1.2); }
+    55%  { opacity: 0.9; transform: rotate(var(--angle)) translateY(calc(-1 * var(--dist)))       scale(1.5); }
+    100% { opacity: 0;   transform: rotate(var(--angle)) translateY(calc(-1 * var(--dist) * 1.6)) scale(0.1); }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   VIENTO al presionar START — líneas que cruzan la pantalla
+═══════════════════════════════════════════════════════════ */
+/* FIX #3: position y right base eliminados; el JS los inyecta con fixed */
+.wind-line {
+    pointer-events: none;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.9) 30%,
+        rgba(255, 210, 120, 0.75) 65%,
+        transparent 100%);
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(255,160,50,0.6), 0 0 20px rgba(255,255,255,0.2);
+    animation: windLineSweep 0.48s ease-in forwards;
+}
+
+@keyframes windLineSweep {
+    0%   { right: 110%; opacity: 0;   transform: scaleX(0.2); }
+    10%  { opacity: 1; }
+    100% { right: -55%; opacity: 0;   transform: scaleX(1); }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   AVATAR SELECCIONADO — borde de fuego
+   FIX #2: sparkExpand reemplazado por avatarFireBorder que SÍ existe
+═══════════════════════════════════════════════════════════ */
+.avatar-option.selected {
+    border-color: #e3350d !important;
+    background: rgba(227, 53, 13, 0.18);
+    /* FIX #1: quitamos el override de hover; se gestiona por specificity */
+    animation: avatarFireBorder 0.65s ease-out forwards;
+}
+
+@keyframes avatarFireBorder {
+    0%   { box-shadow: 0 0 0    0    rgba(255, 100,  0, 0.9); }
+    40%  { box-shadow: 0 0 20px 12px rgba(255, 160,  0, 0.85); }
+    100% { box-shadow: 0 0 7px  4px  rgba(255,  80,  0, 0.4); }
+}
